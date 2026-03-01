@@ -75,5 +75,6 @@ export const login = catchAsync(async (req: Request, res: Response) => {
 
   // STEP 4: TOKEN DISPATCH
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string, { expiresIn: '1d' });
-  res.status(200).json({ status: 'success', token });
+  
+  res.status(200).json({ status: 'success', token, user: { id: user._id, email: user.email } });
 });
