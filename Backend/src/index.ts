@@ -3,6 +3,8 @@ dotenv.config();
 import connectToDatabase from './config/connection';
 import express, { Request, Response } from 'express'; 
 import cors from 'cors';
+import authRouter from './routes/auth.routes';
+import userRouter from './routes/user.routes';
 
 const app = express();
 
@@ -10,9 +12,8 @@ const PORT = Number(process.env.PORT ?? 3000);
 
 app.use(express.json());
 app.use(cors());
-app.get('/', (req: Request, res: Response) => {
-    res.send('Hello, World!');
-});
+app.use('/api/auth', authRouter)
+app.use('/api/user', userRouter)
 
 async function startServer() {
     try{

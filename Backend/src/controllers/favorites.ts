@@ -5,6 +5,10 @@
 // IMPORT: User Model - provides the direct interface for Mongoose document queries and atomic updates.
 // IMPORT: catchAsync - wraps async logic to automatically forward errors to the global error middleware.
 
+import {Request, Response} from 'express';
+import {User, IGitHubRepo} from '../models/user.model';
+import {catchAsync} from '../utils/catchAsync';
+
 /**
  * GET FAVORITES
  * 1. IDENTITY: Uses the 'id' property from the 'req.user' object attached by the auth middleware.
@@ -12,13 +16,87 @@
  * 3. RESPONSE: Returns the user's favorites array with a 200 OK status.
  */
 
+const getFavorites = catchAsync(
+    async(req: Request, res: Response) => {
+        const userId = req.user?.id;
+        
+        if (!userId) {
+            return res.status(401).json({
+                status: 'fail',
+                message: 'User not authenticated',
+            });
+        }
 
+        
+        const userFavorites = await User.findById(userId).select('favorites');
+
+        if (!userFavorites) {
+            return res.status(404).json({
+                status: 'fail',
+                message: 'User not found',
+            });
+        }
+
+        return res.status(200).json({
+            status: 'success',
+            data: userFavorites.favorites,
+        });
+    }
+)
 /**
  * ADD FAVORITE
  * 1. PAYLOAD: Extracts the repository metadata object directly from the request body.
  * 2. ATOMIC UPDATE: Uses '$addToSet' to append the repo while natively preventing duplicate entries.
  * 3. RETURN: Requests the updated document via 'new: true' and returns the new favorites list.
  */
+
+const addFavorite = catchAsync(
+    async(req: Request, res: Response) => {
+        const userId = req.user?.id;
+        const repoData: IGitHubRepo = req.body;
+        
+        if (!userId) {
+            return res.status(401).json({
+                status: "fail",
+                message: 'User not authenticated'
+            })
+        }
+
+        // Fetch the user's current favorites to check if repo already exists
+        const userFavorites = await User.findById(userId).select('favorites');
+        
+        if (!userFavorites) {
+            return res.status(404).json({
+                status: 'fail',
+                message: 'User not found',
+            });
+        }
+
+        // Check if the repo already exists in favorites by repoId
+        const repoExists = userFavorites.favorites.some(fav => fav.repoId === repoData.repoId);
+        
+        if (repoExists) {
+            return res.status(400).json({
+                status: 'fail',
+                message: 'This repository is already in your favorites',
+            });
+        }
+
+        // Use $addToSet to prevent duplicates (atomic backup)
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $addToSet: { favorites: repoData } },
+            { new: true }
+        ).select('favorites');
+
+        return res.status(201).json({
+            status: 'success',
+            data: updatedUser?.favorites,
+        });
+    }
+)
+
+
 
 
 
@@ -29,8 +107,34 @@
  * 3. CLEANUP: Returns the revised favorites collection to synchronize the client-side state.
  */
 
+const removeFavorite = catchAsync(
+    async(req: Request, res: Response) => {
+        const userId = req.user?.id;
+        const repoId = req.params.id;
+
+        if (!userId) {
+            return res.status(401).json({
+                status: 'fail',
+                message: 'User not authenticated',
+            });
+        }
+
+        // Use $pull to remove the specific favorite by ID
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $pull: { favorites: { repoId: Number(repoId) } } },
+            { new: true }
+        ).select('favorites');
+
+        return res.status(200).json({
+            status: 'success',
+            data: updatedUser?.favorites,
+        });
+    }
+)
 
 // EXPORT: Exports the three handlers for mounting in the user routing module.
+export { getFavorites, addFavorite, removeFavorite };
 
 
 // DETAILS_____________________________________________________________

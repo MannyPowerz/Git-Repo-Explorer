@@ -5,31 +5,31 @@
 
 // IMPORTS WITH ONE-LINE REEASONS___________________________
 // IMPORT: express.Router - creates an isolated namespace to prevent polluting the global app instance.
-// import { Router } from 'express';
+import { Router } from 'express';
 
 
 // IMPORT: Controllers - implements Separation of Concerns (SoC) by offloading execution to the Logic Layer.
-// / import { register, login } from '../controllers/auth.controller';
+import { register, login } from '../controllers/authController';
 
 
 // CODE WITH ONE-LINE EXPLANATIONS______________________________
 // INSTANCE: Initializes a dedicated router to be mounted as a middleware sub-module in the main entry point.
-// const router = Router();
+const authRouter = Router();
 
 
 
 // POST /register: Authenticates payload and persists a new User document via the Model's pre-save hashing.
 // EXPECTS: { email, password } in req.body
-// router.post('/register', register);
+authRouter.post('/register', register);
 
 
 // POST /login: Validates credentials and issues a stateless JWT for secure session management.
 // EXPECTS: { email, password } in req.body
-// router.post('/login', login);
+authRouter.post('/login', login);
 
 // EXPORT ___________________________________________________ 
 // EXPORT: Provides a configured module for central mounting in index.ts under a versioned prefix.
-// export default router;
+export default authRouter;
 
 
 

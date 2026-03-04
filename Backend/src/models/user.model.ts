@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt';
  * RESEARCH: "TypeScript Declaration Merging with Mongoose Documents"
  * Why extend Document? It gives 'this' access to Mongoose-specific methods like .isModified().
  */
-interface IGitHubRepo {
+export interface IGitHubRepo {
   repoId: number;
   name: string;
   description?: string;
