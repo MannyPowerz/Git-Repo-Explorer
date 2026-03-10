@@ -20,6 +20,15 @@
 // STEP 6: Define 'language' as a string.
 // STEP 7: Define 'link' as a string.
 
+export interface IRepo {
+    repoId: number ,
+    name: string,
+    description?: string,
+    starCount: number,
+    language: string,
+    link: string
+}
+
 /**
  * INTERFACE 2: IUser
  * WHY: Defines the shape of YOUR authenticated user payload, not GitHub's. 
@@ -28,6 +37,11 @@
 // STEP 1: Export an interface named IUser.
 // STEP 2: Define 'email' as a string.
 // STEP 3: Define 'favorites' as an array of 'IRepo' objects.
+
+export interface IUser{
+    email: string,
+    favorites?: IRepo[]
+}
 
 /**
  * INTERFACE 3: IAuthResponse
@@ -38,5 +52,11 @@
 // STEP 2: Define 'status' as a string (this will catch your 'success' message).
 // STEP 3: Define 'token' as a string (this is the JWT your frontend needs to save to localStorage).
 // STEP 4: Define 'user' as a nested object containing 'id' (string) and 'email' (string).
+
+export interface IAuthResponse{
+    status: string,
+    token: string,
+    user: {id: string, email: string}
+}
 
 // EXPORT NOTE: In TypeScript type definition files, you simply place the 'export' keyword directly in front of each interface declaration.

@@ -4,6 +4,8 @@
 // IMPORT: The customized 'api' instance from './api' (NOT raw axios) so your requests hit the correct base URL.
 // IMPORT: The 'IAuthResponse' and 'IUser' interfaces from '../types' to enforce strict typing on the API responses.
 
+import api from "./api";
+import {type IAuthResponse, type IUser} from "../types/index"
 
 
 /**
@@ -17,6 +19,24 @@
  * 7. RETURN: Return the user object back to the component so the UI can update its global state.
  */
 
+
+
+export const register = async (email : string, password:string): Promise<IUser>  => {
+    
+    const credentials = {
+        email: email, 
+        password: password
+    };
+
+    const response =  await api.post<IAuthResponse>('/auth/register', credentials )
+    
+    const {token, user} = response.data;
+    
+    localStorage.setItem('jwtToken', token);
+    localStorage.setItem('user', JSON.stringify(user));
+
+    return user;
+}
 /**
  * LOGIN
  * 1. SIGNATURE: Export an async function 'login' that accepts an email and password string.
@@ -28,6 +48,23 @@
  * 7. RETURN: Pass the user object back to the calling component to synchronize the UI.
  */
 
+export const login = async (email : string, password:string): Promise<IUser> => {
+    
+    const credentials = {
+        email: email, 
+        password: password
+    };
+    
+    const response = await api.post<IAuthResponse>('/auth/login', credentials)
+
+    const {token, user} = response.data;
+
+    localStorage.setItem('jwtToken', token);
+    localStorage.setItem('user', JSON.stringify(user));
+
+    return user;
+}
+
 /**
  * LOGOUT
  * 1. SIGNATURE: Export a synchronous function 'logout'. No async/await is needed.
@@ -35,5 +72,10 @@
  * 2. PURGE (TOKEN): Use 'localStorage.removeItem' to delete the authentication token.
  * 3. PURGE (USER): Use 'localStorage.removeItem' to delete the stringified user data.
  */
+
+export const logout =  (): void => {
+    localStorage.removeItem('jwtToken');
+    localStorage.removeItem('user');
+};
 
 // EXPORT: Export these functions (e.g., export const login = ..., or export default { register, login, logout }).
