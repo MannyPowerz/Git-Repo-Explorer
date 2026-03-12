@@ -12,7 +12,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 // IMPORT: ProtectedRoute from './components/ProtectedRoute'.
     // ProtectedRoute acts as a wrapper around routes that require authentication Any child routes inside it must pass the auth check before rendering. You import it here because this is where you define which routes are public and which are protected
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 // IMPORT: HomePage, LoginPage, RegisterPage, FavoritesPage from './pages/...'.
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
