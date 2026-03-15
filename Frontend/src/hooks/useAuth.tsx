@@ -12,7 +12,7 @@ import {register as authRegister,
       login as authLogin,
       logout as authLogout}  from '../services/authService';
 // IMPORT: IUser, IAuthResponse from '../types'.
-import {type IUser} from '../types';
+import {type IRepo, type IUser} from '../types';
 
 
 
@@ -28,6 +28,7 @@ import {type IUser} from '../types';
 // is a contract or a menu that shows what is in the "vault", i need it to know exact "shape" to share with the app bokrten down into two parts State (The Data) and Mutators (The Actions)
 interface IAuthContext{
    user: IUser | null,
+   favorites: IRepo[];
    isAuthenticated: boolean,
    loading: boolean,
    login : (email: string, password: string) => Promise<void> ,
@@ -53,6 +54,7 @@ const AuthContext = createContext<IAuthContext | undefined>(undefined);
 export const AuthProvider = ({ children } : {children: ReactNode}) => {
    
    const [user, setUser] = useState<IUser | null>(null);
+   const [favorites, setFavorites] = useState<IRepo[]>([]);
    const [loading, setLoading] = useState<boolean>(true)
       //starts this as (false), the ProtectedRoute instantly assumes the app is done loading, looks at user: null, and violently kicks the user back to the login screen before the app even has a chance to check if they have a saved session. Starting with (true) locks the UI behind a loading spinner until we are 100% sure of their identity
 
@@ -120,6 +122,8 @@ export const AuthProvider = ({ children } : {children: ReactNode}) => {
 // RETURN: Return <AuthContext.Provider value={{ user, isAuthenticated: !!user, loading, login, register, logout }}> wrapping {children}.
    const payload = {
       user: user,
+      favorites: favorites,
+      setFavorites: setFavorites,
       isAuthenticated: !!user,
       loading: loading,
       login: login,

@@ -21,8 +21,8 @@ import {useAuth} from "../hooks/useAuth";
 interface IRepoCardProps {
     repo : IRepo;
     isSaved: boolean;
-    onSave: (repo: IRepo) => void;
-    onRemove: (id: number) => void;
+    onSave?: (repo: IRepo) => void;
+    onRemove?: (id: number) => void;
 };
 
 /**
@@ -76,27 +76,28 @@ const RepoCard = ({ repo, isSaved, onSave, onRemove }: IRepoCardProps) => {
                 style={{ marginTop: '10px' }}
             > {/* Only show buttons if the user is logged in */}
                 {isAuthenticated && (
-                    <>
+                    <div className="repo-actions">
                         {/* 3. REMOVE BUTTON: User is logged in AND repo is already saved */}
-                        {isSaved && 
+                    
+                        {isSaved && onRemove && (
                             (<button
                                 onClick={() => onRemove(repo.repoId)}
                                 style={{ color: 'red' }}
                             >
                                 Remove from Favorites
                             </button>)
-                        }
+                            )}
 
                         {/* 4. SAVE BUTTON: User is logged in AND repo is NOT yet saved */}
-                        {!isSaved && 
+                        {!isSaved && onSave && (
                             (<button
                                 onClick={() => onSave(repo)}
                                 style={{ color: 'green' }}
                             >
                                 Save to Favorites
                             </button>)
-                        }
-                    </>
+                        )}
+                    </div>
                 )}
 
             </div>

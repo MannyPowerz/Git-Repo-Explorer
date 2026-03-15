@@ -20,8 +20,8 @@ interface IRepoListProps {
     repos : IRepo[];
     // When you render a list of 100 repositories and need to check if each one is "favorited," an array has to scan every single item to find a match using Array (.includes()) or Set (.has()):
     // A Set physically cannot contain the same value twice
-    favorites: IRepo[];
-    onSave: (repo: IRepo) => void;
+    favorites: Set<number>;
+    onSave?: (repo: IRepo) => void;
     onRemove: (id: number) => void;
 };
 
@@ -64,7 +64,7 @@ const RepoList = ({repos, favorites, onSave, onRemove}: IRepoListProps) => {
                 // for every single repo from the search results, you need to look into the favorites array and see if a match exists
                     // .some() on favorites array
                 // pass result to the isSaved prop in the card
-                const isSaved = favorites.some( (fav: IRepo) => fav.repoId === repo.repoId);
+                const isSaved = favorites.has(repo.repoId);
 
                 return (
                     <RepoCard
