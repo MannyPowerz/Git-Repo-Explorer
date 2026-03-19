@@ -14,21 +14,21 @@ import { getFavorites, addFavorite, removeFavorite } from '../controllers/favori
 const userRouter  = Router();
 
 // BOUNCER: Applies the protection middleware to every route defined below this line (global to this router).
-userRouter .use(protect);
+userRouter.use(protect);
 
 
 
 // GET /favorites: Retrieves the authenticated user's collection of saved repositories from the Model.
 // EXPECTS: Valid JWT in the Authorization Header.
-userRouter .get('/favorites', getFavorites);
+userRouter.get('/favorites', getFavorites);
 
 // POST /favorites: Validates the repository payload and appends it to the user's favorites array.
 // EXPECTS: { repoId, name, link, ... } in req.body.
-userRouter .post('/favorites', addFavorite);
+userRouter.post('/favorites', addFavorite);
 
 // DELETE /favorites/:id: Uses a Route Parameter (:id) to identify and remove a specific repository.
 // EXPECTS: The unique ID of the favorite to be passed directly in the URL path.
-userRouter .delete('/favorites/:id', removeFavorite);
+userRouter.delete('/favorites/:id', removeFavorite);
 
 // EXPORT: Provides a fully secured routing module for central mounting in index.ts under a versioned prefix.
 export default userRouter ;

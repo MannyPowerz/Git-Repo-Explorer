@@ -65,7 +65,7 @@ const SearchBar = ( {onSearch}: ISearchBarProps): ReactElement => {
                 onChange={(event) => setUsernameQuery(event.target.value)}
                 style={{ padding: '8px', width: '250px' }}
             />
-           <button type="submit" style={{ padding: '8px 16px', marginLeft: '10px' }}>
+            <button type="submit" style={{ padding: '8px 16px', marginLeft: '10px' }}>
                 Search
             </button> 
         </form>

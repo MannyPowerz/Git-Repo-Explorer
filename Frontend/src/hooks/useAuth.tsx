@@ -25,7 +25,7 @@ import {type IRepo, type IUser} from '../types';
  * 5. register: (email, password) => Promise<void>.
  * 6. logout: () => void.
  */
-// is a contract or a menu that shows what is in the "vault", i need it to know exact "shape" to share with the app bokrten down into two parts State (The Data) and Mutators (The Actions)
+// is a contract or a menu that shows what is in the "vault", i need it to know exact "shape" to share with the app broken down into two parts State (The Data) and Mutators (The Actions)
 interface IAuthContext{
    user: IUser | null,
    favorites: IRepo[];

@@ -39,7 +39,7 @@ const getFavorites = catchAsync(
 
         return res.status(200).json({
             status: 'success',
-            data: userFavorites.favorites,
+            results: userFavorites.favorites,
         });
     }
 )
@@ -73,7 +73,7 @@ const addFavorite = catchAsync(
         }
 
         // Check if the repo already exists in favorites by repoId
-        const repoExists = userFavorites.favorites.some(fav => fav.repoId === repoData.repoId);
+        const repoExists = userFavorites.favorites?.some(fav => fav.repoId === repoData.repoId);
         
         if (repoExists) {
             return res.status(400).json({
@@ -91,7 +91,7 @@ const addFavorite = catchAsync(
 
         return res.status(201).json({
             status: 'success',
-            data: updatedUser?.favorites,
+            results: updatedUser?.favorites,
         });
     }
 )
@@ -128,7 +128,7 @@ const removeFavorite = catchAsync(
 
         return res.status(200).json({
             status: 'success',
-            data: updatedUser?.favorites,
+            results: updatedUser?.favorites,
         });
     }
 )

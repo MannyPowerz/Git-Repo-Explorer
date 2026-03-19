@@ -46,7 +46,7 @@ export const register = catchAsync(async (req: Request, res: Response) => {
     { expiresIn: '1d' }
   );
 
-  res.status(201).json({ status: 'success', token });
+  res.status(201).json({ status: 'success', token, user: { id: newUser._id, email: newUser.email } });
 });
 
 /**

@@ -19,7 +19,7 @@ export interface IGitHubRepo {
 export interface IUser extends Document {
   email: string;
   password: string;
-  favorites: IGitHubRepo[];
+  favorites?: IGitHubRepo[];
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 

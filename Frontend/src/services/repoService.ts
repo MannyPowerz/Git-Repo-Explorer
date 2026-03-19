@@ -18,10 +18,23 @@ import {type IRepo} from '../types/index';
  */
 
 export const searchRepos = async (username: string): Promise<IRepo[]> => {
-    const response = await axios.get<IRepo[]>(
+    // 1. We fetch the data as 'any[]' because we know it's not IRepo[] yet.
+    const response = await axios.get<any[]>(
         `https://api.github.com/users/${username}/repos`
     );
-    return response.data;
+
+    const rawData = response.data;
+
+    // 2. We use .map() to translate the "GitHub Slang" into our "Internal Language."
+    return rawData.map((repo): IRepo => ({
+        repoId: repo.id,
+        name: repo.name,
+        // We use '??' to ensure a string even if GitHub sends null
+        description: repo.description ?? "No description provided.", 
+        starCount: repo.stargazers_count,
+        language: repo.language ?? "Unknown",
+        link: repo.html_url
+    }));
 };
 
 /**
