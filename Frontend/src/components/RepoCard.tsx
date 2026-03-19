@@ -50,7 +50,7 @@ const RepoCard = ({ repo, isSaved, onSave, onRemove }: IRepoCardProps) => {
         // 1. DATA:
         <div 
             className="repo-card"
-            style={{ border: '1px solid #ccc', padding: '15px', margin: '10px' }}
+            
         >
             <h3>{repo.name}</h3>
             <p>{repo.description || "No description provided."}</p>
@@ -73,7 +73,7 @@ const RepoCard = ({ repo, isSaved, onSave, onRemove }: IRepoCardProps) => {
             {/* 2. ACTION AREA: Conditional Logic*/}
             <div
                 className="repo-actions" 
-                style={{ marginTop: '10px' }}
+                
             > {/* Only show buttons if the user is logged in */}
                 {isAuthenticated && (
                     <div className="repo-actions">
@@ -82,7 +82,7 @@ const RepoCard = ({ repo, isSaved, onSave, onRemove }: IRepoCardProps) => {
                         {isSaved && onRemove && (
                             (<button
                                 onClick={() => onRemove(repo.repoId)}
-                                style={{ color: 'red' }}
+                                className="btn-remove"
                             >
                                 Remove from Favorites
                             </button>)
@@ -92,7 +92,7 @@ const RepoCard = ({ repo, isSaved, onSave, onRemove }: IRepoCardProps) => {
                         {!isSaved && onSave && (
                             (<button
                                 onClick={() => onSave(repo)}
-                                style={{ color: 'green' }}
+                                className="btn-save"
                             >
                                 Save to Favorites
                             </button>)

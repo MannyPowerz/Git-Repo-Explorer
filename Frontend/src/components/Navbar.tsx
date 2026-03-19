@@ -44,21 +44,23 @@ const Navbar = (): ReactElement => {
  */
     return (
         <nav className="navbar">
-            <Link to="/">Home</Link>
-            {isAuthenticated ? (
-                <>
-                    {/* LOGGED IN VIEW*/}
-                    <Link to="/favorites">My Favorites</Link>
-                    <span>{user?.email}</span>
-                    <button onClick={handleLogout}>Logout</button>
-                </>
-            ) : (
-                <>
-                    {/* LOGGED OUT VIEW*/}
-                    <Link to="/login">Login</Link>
-                    <Link to="/register">Register</Link>
-                </>
-            )}
+            <div className="nav-links">
+                <Link to="/">Home</Link>
+                {isAuthenticated ? (
+                    <>
+                        {/* LOGGED IN VIEW*/}
+                        <Link to="/favorites">My Favorites</Link>
+                        <span>{user?.email}</span>
+                        <button onClick={handleLogout}>Logout</button>
+                    </>
+                ) : (
+                    <>
+                        {/* LOGGED OUT VIEW*/}
+                        <Link to="/login">Login</Link>
+                        <Link to="/register">Register</Link>
+                    </>
+                )}
+            </div>
         </nav>
     
     )

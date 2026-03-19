@@ -58,63 +58,66 @@ const LoginPage = (): ReactElement => {
  * 5. REDIRECT LINK: Render a React Router <Link to="/register"> linking to the registration page.
  */
     return (
-        <div className="login-container">
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                {/* EMAIL INPUT */}
-                <div>
-                    <input 
-                        type="email"
-                        value={email}
-                        placeholder="Email Address"
-                        autoComplete="email"
-                        onChange={(event) => setEmail(event.target.value)}
+        <div className="auth-container">
+            <div className="auth-card">
+                <h2>Login</h2>
+                <form onSubmit={handleSubmit}>
+                    {/* EMAIL INPUT */}
+                    <div>
+                        <input 
+                            type="email"
+                            value={email}
+                            placeholder="Email Address"
+                            autoComplete="email"
+                            onChange={(event) => setEmail(event.target.value)}
 
-                        required
-                    />
-                </div>
+                            required
+                        />
+                    </div>
 
-                {/* PASSWORD INPUT */}
-                <div>
-                    <input 
-                        type="password"
-                        value={password}
-                        placeholder="Password"
-                        autoComplete="current-password"
-                        onChange={(event) => setPassword(event.target.value)}
+                    {/* PASSWORD INPUT */}
+                    <div>
+                        <input 
+                            type="password"
+                            value={password}
+                            placeholder="Password"
+                            autoComplete="current-password"
+                            onChange={(event) => setPassword(event.target.value)}
 
-                        required
-                    />
-                </div>
-                 
+                            required
+                        />
+                    </div>
+                    
 
-                    {error && (
-                        <span 
-                            className="error"
-                            style={{ color: 'red' }}
-                        >
-                            {error}
-                        </span>
+                        {error && (
+                            <span 
+                                className="error"
+                                style={{ color: 'red' }}
+                            >
+                                {error}
+                            </span>
 
-                    )}
-                
+                        )}
+                    
 
-                <button
-                    type="submit"
-                    disabled={isSubmitting}
-                >
-                    {isSubmitting ? "Logging in..." : "Login"}
-                </button>
-
-                <p>
-                    Don't have an account? 
-                    <Link 
-                        to="/register"
+                    <button
+                        className="btn-submit"
+                        type="submit"
+                        disabled={isSubmitting}
                     >
-                        Register
-                    </Link>
-                </p>
-            </form>
+                        {isSubmitting ? "Logging in..." : "Login"}
+                    </button>
+
+                    <p>
+                        Don't have an account? 
+                        <Link 
+                            to="/register"
+                        >
+                            Register
+                        </Link>
+                    </p>
+                </form>
+            </div>
         </div>
     )
 

@@ -20,6 +20,8 @@ import RegisterPage from "./pages/RegisterPage";
 import FavoritesPage from "./pages/FavoritesPage";
 
 
+import "./App.css";
+
 
 /**
  * COMPONENT: App

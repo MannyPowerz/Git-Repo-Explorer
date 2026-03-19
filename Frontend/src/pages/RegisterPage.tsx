@@ -59,78 +59,81 @@ const RegisterPage = (): ReactElement => {
  */
 
     return (
-        <div className="register-container">
-            <h2>Register</h2>
-            <form onSubmit={handleSubmit}>
-                {/* EMAIL INPUT */}
-                <div>
-                    <input 
-                        type="email"
-                        value={email}
-                        placeholder="Email Address"
-                        onChange={(event) => setEmail(event.target.value)}
+        <div className="auth-container">
+            <div className="auth-card">
+                <h2>Register</h2>
+                <form onSubmit={handleSubmit}>
+                    {/* EMAIL INPUT */}
+                    <div>
+                        <input 
+                            type="email"
+                            value={email}
+                            placeholder="Email Address"
+                            onChange={(event) => setEmail(event.target.value)}
 
-                        required
-                    />
-                </div>
+                            required
+                        />
+                    </div>
+                        
                     
-                
 
-                {/* PASSWORD INPUT */}
-                <div>
-                    <input 
-                        type="password"
-                        value={password}
-                        placeholder="Password"
-                        onChange={(event) => setPassword(event.target.value)}
+                    {/* PASSWORD INPUT */}
+                    <div>
+                        <input 
+                            type="password"
+                            value={password}
+                            placeholder="Password"
+                            onChange={(event) => setPassword(event.target.value)}
 
-                        required
-                    />
-                </div>
+                            required
+                        />
+                    </div>
+                        
                     
-                
 
-                {/* CONFIRM PASSWORD INPUT */}
-                <div>
-                    <input 
-                        type="password"
-                        value={confirmPassword}
-                        placeholder="Confirm Password"
-                        onChange={(event) => setConfirmPassword(event.target.value)}
+                    {/* CONFIRM PASSWORD INPUT */}
+                    <div>
+                        <input 
+                            type="password"
+                            value={confirmPassword}
+                            placeholder="Confirm Password"
+                            onChange={(event) => setConfirmPassword(event.target.value)}
 
-                        required
-                    />
-                </div>
-                     
-                
+                            required
+                        />
+                    </div>
+                        
+                    
 
-                    {error && (
-                        <span 
-                            className="error"
-                            style={{ color: 'red' }}
-                        >
-                            {error}
-                        </span>
+                        {error && (
+                            <span 
+                                className="error"
+                                style={{ color: 'red' }}
+                            >
+                                {error}
+                            </span>
 
-                    )}
+                        )}
 
-                
-                <button
-                    type="submit"
-                    disabled={isSubmitting}
-                >
-                    {isSubmitting ? "Creating Account..." : "Create Account"}
-                </button>
-
-                <p>
-                    Already Have an Account?
-                    <Link 
-                        to="/login"
+                    
+                    <button
+                        className="btn-submit"
+                        type="submit"
+                        disabled={isSubmitting}
                     >
-                        Login
-                    </Link>
-                </p>
-            </form>
+                        {isSubmitting ? "Creating Account..." : "Create Account"}
+                    </button>
+
+                    <p>
+                        Already Have an Account?
+                        <Link 
+                            to="/login"
+                        >
+                            Login
+                        </Link>
+                    </p>
+                </form>
+            </div>
         </div>
     )
 }

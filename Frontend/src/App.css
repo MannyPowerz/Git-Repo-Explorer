@@ -1,0 +1,200 @@
+/* ":root" : We are creating a "Single Source of Truth." If you want to change the "Theme," you change one variable, not 50 selectors. */
+:root {
+  /* 1. COLOR TOKENS */
+  --bg-main: #0d1117;      
+  --bg-card: #161b22;      
+  --bg-input: #010409;     
+  --border-default: #30363d;
+  --text-main: #c9d1d9;    
+  --text-link: #58a6ff;    
+  --accent-success: #238636;
+  --accent-success-hover: #2ea44f;
+  --accent-danger: #da3633;
+
+  /* 2. SPACING TOKENS */
+  --gap-sm: 8px;
+  --gap-md: 16px;
+  --gap-lg: 24px;
+  --radius: 6px;
+}
+
+/* 3. THE RESET */
+* {
+  /* (box-sizing: border-box) : This is the most important line in CSS. By default, adding padding to a 100px box makes it 120px. Trash. border-box forces the padding inside the 100px. It makes math predictable. */
+  box-sizing: border-box; 
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  /* -webkit-font-smoothing: It makes the font rendering on Mac/Chrome look thinner and more premium. */
+  -webkit-font-smoothing: antialiased; 
+}
+
+/* 4. LINKS: Global styling to prevent default purple/blue "Trash" UI */
+a {
+  color: var(--text-link);
+  text-decoration: none; /* Removes the underline for a cleaner, modern app look */
+  transition: filter 0.2s; /* Subtle hover effect logic */
+}
+
+a:hover {
+  filter: brightness(1.2); /* Makes the link slightly "glow" when hovered */
+  text-decoration: underline;
+}
+
+/* 5. LAYOUT: NAVBAR */
+.navbar {
+  display: flex;                /* display: flex: We turn the container into a "Flex Container." Its children now have "Superpowers."*/
+  justify-content: space-between; /* justify-content: space-between: This tells the browser: "Put the Logo on the far left and the Links on the far right, and give the empty space to the middle."*/
+  align-items: center;          /* align-items: center: Vertically aligns the text so your logo and login button aren't crooked. */
+  padding: var(--gap-md) var(--gap-lg);
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--gap-md);
+  list-style: none; /* Removes the "bullet points" from the UL */
+}
+
+/* 6. SEARCHBAR: Using specific class names instead of inline styles for central management */
+.search-container {
+  max-width: 600px;         /* max-width: Never let a search bar stretch across a whole desktop screen. It looks like a mistake. */
+  margin: var(--gap-lg) auto; /* margin: auto: This is the classic way to center a block-level element horizontally. */
+  display: flex;
+  flex-direction: column;    /* flex-direction: column: This is our Mobile-First trigger. On a phone, the input is on top of the button. */
+  gap: var(--gap-sm);
+  padding: 0 var(--gap-md);
+}
+
+.search-input {
+  background-color: var(--bg-input);
+  color: var(--text-main);
+  /* The input inherits the global padding/border defined in the generic selector below */
+}
+
+/* 7. AUTH PAGES: The "Centered Card" Logic */
+.auth-container {
+  display: flex;
+  justify-content: center; /* Horizontally centers the card */
+  align-items: center;     /* Vertically centers the card */
+  min-height: 80vh;        /* Commands the container to take up almost the full screen height so centering actually works */
+  padding: var(--gap-md);
+}
+
+.auth-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-default);
+  padding: var(--gap-lg);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 400px; /* Prevents the login form from becoming comically wide on desktop */
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+}
+
+/* 8. BUTTONS: Standardizing the "Action" feel */
+input, button {
+  padding: 12px;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  border: 1px solid var(--border-default);
+  outline: none; /* Removes the ugly default browser focus ring */
+}
+
+button {
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.1s; /* Makes the button feel "physical" when clicked */
+}
+
+button:active {
+  transform: scale(0.98); /* Shrinks slightly when pressed - High quality UX feedback */
+}
+
+.btn-submit, .btn-save {
+  background-color: var(--accent-success);
+  color: var(--text-inverse);
+  border: none;
+}
+
+.btn-submit:hover, .btn-save:hover {
+  background-color: var(--accent-success-hover);
+}
+
+.btn-remove {
+  background-color: transparent;
+  color: var(--accent-danger);
+  border: 1px solid var(--accent-danger);
+}
+
+.btn-remove:hover {
+  background-color: var(--accent-danger);
+  color: white;
+}
+
+/* 9. REPO LIST & CARDS */
+.repo-list-container {
+  display: grid;               /* display: grid: We are creating a "Coordinate System." */
+  grid-template-columns: 1fr;  /* 1fr: This tells the column to take up "1 Fraction" of the screen. On mobile, that means 100% width.*/
+  gap: var(--gap-md);
+  padding: var(--gap-md);
+}
+
+.repo-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-default);
+  padding: var(--gap-md);
+  border-radius: var(--radius);
+  display: flex;               /* Flex inside Grid: Allows us to push the buttons to the bottom using space-between regardless of description length. Prevents "Uneven" cards.*/
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px; /* Ensures all cards have a baseline height for visual consistency */
+}
+
+/* 10. RESPONSIVE UPGRADES: The Desktop transition */
+@media (min-width: 768px) {
+  .repo-list-container {
+    grid-template-columns: repeat(2, 1fr); /* repeat(2, 1fr): When the screen is wide enough, we split the grid into two equal columns.*/
+  }
+
+  .search-container {
+    flex-direction: row; /* flex-direction: row: The SearchBar input and button move from "Stacked" to "Side-by-side." */
+  }
+
+  .search-input {
+    flex: 1; /* flex: 1: This tells the input field: "Take up all the room that the button doesn't need. */
+  }
+}
+
+/* 11. REPO META: Spacing for stars, language, and link */
+.repo-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  flex-wrap: wrap;
+  margin-top: var(--gap-sm);
+}
+
+/* 12. INPUT DARK THEME: Force dark background on autofilled inputs */
+input {
+  background-color: var(--bg-input);
+  color: var(--text-main);
+}
+
+/* 13. AUTH FORM INPUTS: Full width inside auth card */
+.auth-card input {
+  width: 100%;
+}
+
+/* 14. AUTH FORM BUTTON: Full width submit */
+.auth-card .btn-submit {
+  width: 100%;
+}

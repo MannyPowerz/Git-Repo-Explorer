@@ -55,17 +55,17 @@ const SearchBar = ( {onSearch}: ISearchBarProps): ReactElement => {
     };
 
     return(
-        <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
+        <form className="search-container" onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
             <input
+                className="search-input"
                 type="text"
                 placeholder="Enter Github Username ..."
                 value={queryUsername}
                 // This property of the Event object refers to the specific DOM element that the event originated from. In this case, it refers to the actual <input> element the user is typing into
                 // an object representing a specific HTML
                 onChange={(event) => setUsernameQuery(event.target.value)}
-                style={{ padding: '8px', width: '250px' }}
             />
-            <button type="submit" style={{ padding: '8px 16px', marginLeft: '10px' }}>
+            <button className="btn-submit" type="submit">
                 Search
             </button> 
         </form>
